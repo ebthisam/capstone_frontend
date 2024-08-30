@@ -3,7 +3,7 @@
   <!-- 
     - #HEADER
   -->
-
+<div class="maincontainer">
   <header class="header">
 
     <div class="alert">
@@ -35,8 +35,8 @@
 
         <div class="header-actions">
 
-          <button class="header-action-btn" aria-label="user">
-            <ion-icon name="person-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+          <button class="header-action-btn" aria-label="user" routerLink="/login">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
           </button>
 
           <button class="header-action-btn" aria-label="favourite item">
@@ -60,9 +60,17 @@
             <li>
               <a href="#home"  class="navbar-link has-after">Home</a>
             </li>
-            <li>
-              <a href="" class="navbar-link has-after">Categories</a>
+            <li class="dropdown" (mouseover)="toggleCategoriesDropdown(true)" (mouseleave)="toggleCategoriesDropdown(false)">
+              <a href="#" class="navbar-link has-after">Categories</a>
+              <ul *ngIf="showCategoriesDropdown" class="dropdown-menu custom-dropdown">
+                <li *ngFor="let category of categories">
+                  <a [routerLink]="['/products', category.id]" class="dropdown-item">{{ category.name }}</a>
+                </li>
+              </ul>
             </li>
+            
+            
+      
             <li>
               <a href="#shop" class="navbar-link has-after">Shop</a>
             </li>
@@ -765,3 +773,4 @@
   </a>
 
 <router-outlet></router-outlet>
+</div>

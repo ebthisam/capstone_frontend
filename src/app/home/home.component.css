@@ -1,69 +1,117 @@
+/* home.component.css */
+.maincontainer{
+  font-size: 10px !important;
 
-  /*-----------------------------------*\
-    #REUSED STYLE
-  \*-----------------------------------*/
+}
+
   
-  .container { padding-inline: 15px; }
-  
-  .section { padding-block: var(--section-padding); }
-  
-  .has-bg-image {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .h1,
-  .h2,
-  .h3,
-  .h2-large {
-    color: var(--black);
-    font-weight: var(--fw-600);
-    line-height: 1.3;
-  }
-  
-  .h1 {
-    font-size: var(--fs-1);
-    line-height: 1.2;
-  }
-  
-  .h2 { font-size: var(--fs-3); }
-  
-  .h2-large { font-size: var(--fs-2); }
-  
-  .h3 { font-size: var(--fs-4); }
-  
-  .btn {
-    font-weight: var(--fw-600);
-    max-width: max-content;
-    padding: 10px 30px;
-    border-radius: var(--radius-3);
-    transition: var(--transition-1);
-  }
-  
-  .btn-primary,
-  .btn-secondary:is(:hover, :focus) {
-    background-color: var(--black);
-    color: var(--white) !important;
-  }
-  
-  .btn-primary:is(:hover, :focus) { background-color: var(--hoockers-green); }
-  
-  .btn-secondary {
-    background-color: var(--white);
-    color: var(--black);
-    box-shadow: var(--shadow-2);
-  }
-  
-  .has-scrollbar {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding-block-end: 15px;
-    margin-block-end: -15px;
-    scroll-snap-type: inline mandatory;
-  }
-  
+ion-icon {
+  pointer-events: none;
+  --ionicon-stroke-width: 25px;
+}
+
+li {
+  list-style: none;
+}
+
+a, img, input, button, ion-icon {
+  display: block;
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+img {
+  height: auto;
+}
+
+input, button {
+  background: none;
+  border: none;
+  font: inherit;
+}
+.container {
+  padding-inline: 15px;
+}
+
+.section {
+  padding-block: var(--section-padding);
+}
+
+.has-bg-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.h1,
+.h2,
+.h3,
+.h2-large {
+  color: var(--black);
+  font-weight: var(--fw-600);
+  line-height: 1.3;
+}
+
+.h1 {
+  font-size: var(--fs-1);
+  line-height: 1.2;
+}
+
+.h2 {
+  font-size: var(--fs-3);
+}
+
+.h2-large {
+  font-size: var(--fs-2);
+}
+
+.h3 {
+  font-size: var(--fs-4);
+}
+
+.btn {
+  font-weight: var(--fw-600);
+  max-width: max-content;
+  padding: 10px 30px;
+  border-radius: var(--radius-3);
+  transition: var(--transition-1);
+}
+
+.btn-primary,
+.btn-secondary:is(:hover, :focus) {
+  background-color: var(--black);
+  color: var(--white) !important;
+}
+
+.btn-primary:is(:hover, :focus) {
+  background-color: var(--hoockers-green);
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--black);
+  box-shadow: var(--shadow-2);
+}
+
+.has-scrollbar {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-block-end: 15px;
+  margin-block-end: -15px;
+  scroll-snap-type: inline mandatory;
+}
+
+.scrollbar-item {
+  min-width: 100%;
+  scroll-snap-align: start;
+}
+
+/* More styles from home.component.css... */
+
   .scrollbar-item {
     min-width: 100%;
     scroll-snap-align: start;
@@ -829,7 +877,50 @@
      * HEADER
      */
   
-    .alert { padding-block: 8px; }
+    .alert { padding-block: 8px;
+      margin-bottom: -9px;
+      padding-bottom: 0px;
+
+      
+    }
+    /* Custom dropdown styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding: 10px 0;
+  min-width: 200px;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
   
     .header-top .container { padding-inline: 30px; }
   
@@ -1145,7 +1236,7 @@
       left: 0;
       width: 100%;
       background-color: var(--white);
-      padding-block: 18px;
+      padding-block: 1px;
       z-index: 4;
     }
   

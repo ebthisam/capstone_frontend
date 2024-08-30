@@ -1,42 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable } from 'rxjs';
-import { Product } from './product';
-import { Vendor } from './vendor';
+import { Observable } from 'rxjs';
+import { Product} from './product';
+import { Review } from './review';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:8080/api/products';
-  private vendorApiUrl = 'http://localhost:8080/api/vendors'; // Assuming this is the Vendor service URL
-
+  private apiUrl = 'http://localhost:5003/api/products'; // Change the URL to your backend base URL
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}`);
-  }
-
-  getProductById(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
-  }
-
+  // POST: Create a new product
   createProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(`${this.apiUrl}`, product);
   }
 
+  // GET: Get product by ID
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
+  // GET: Get all products
+  getAllProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}`);
+  }
+
+  // PUT: Update product by ID
   updateProduct(id: string, product: Product): Observable<Product> {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
   }
 
+  // DELETE: Delete product by ID
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-  getProductWithVendor(id: string): Observable<any> {
-    return forkJoin({
-      product: this.http.get<Product>(`${this.apiUrl}/${id}`),
-      vendor: this.http.get<Vendor>(`${this.vendorApiUrl}/vendor/${id}`) // Fetch vendor using vendorId from product
-    });
+
+  // GET: Get products by vendor ID
+  getProductsByVendorId(vendorId: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/vendor/${vendorId}`);
+  }
+
+  // GET: Get reviews by product ID
+  getReviewsByProductId(id: string): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/${id}/reviews`);
   }
 }

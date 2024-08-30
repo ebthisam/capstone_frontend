@@ -1,0 +1,87 @@
+<header class="header">
+
+    <div class="alert">
+      <div class="container">
+        <p class="alert-text">Free Shipping Across India on Orders Above ₹299!</p>
+      </div>
+    </div>
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="#" class="logo">
+          <img src="/assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <div class="header-actions">
+
+          <button class="header-action-btn" aria-label="user" routerLink="/login">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+          <button class="header-action-btn" aria-label="favourite item">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item">
+            <data class="btn-text" value="0">$0.00</data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button>
+
+        </div>
+
+    
+
+      </div>
+    </div>
+
+  </header>
+  <div class="product-list-page">
+    <!-- Sidebar with categories -->
+    <aside class="categories-sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li *ngFor="let category of categories">
+            <a [routerLink]="['/products', category.id]" class="dropdown-item">{{ category.name }}</a>
+          </li>
+      </ul>
+    </aside>
+  
+    <!-- Main content with products -->
+    <main class="products-main">
+      <h2>Products</h2>
+      <div *ngIf="products.length; else noProducts" class="products-grid">
+        <div *ngFor="let product of products" class="product-card">
+          <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image">
+          <div class="product-details">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <p class="product-price">{{ product.price |currency:'INR' }}</p>
+          </div>
+        </div>
+      </div>
+      <ng-template #noProducts>
+        <p>No products found for this category.</p>
+      </ng-template>
+    </main>
+  </div>
+  

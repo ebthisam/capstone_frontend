@@ -1,13 +1,15 @@
 /* General Styles */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f1f1f1;
-    height: 100%;
-    overflow-y: auto;
-}
+/* home.component.css */
+:host {
+    font-size: 15px; /* Component-specific font size */
+  }
+.form-control {
+    font-size: 15px; /* Component-specific font size */
+    
 
+
+  }
+  
 /* Main Container */
 .main-container {
     height: 100vh;
@@ -45,7 +47,7 @@ h2 {
 /* Form Group */
 .form-group {
     width: 100%;
-    margin-bottom: -3px;
+    margin-bottom: 3px;
 }
 
 /* Label */
@@ -62,7 +64,7 @@ input {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 3px;
         transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -79,7 +81,7 @@ input:focus {
     border-radius: 8px;
     text-align: left;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .alert-danger {
@@ -101,7 +103,7 @@ input:focus {
     border: none;
     border-radius: 8px;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -129,7 +131,7 @@ input:focus {
 
 /* OR Separator */
 .or-separator p {
-    font-size: 14px;
+    font-size: 15px;
     color: #666;
 }
 
@@ -146,10 +148,14 @@ input:focus {
 /* Styling for the button itself */
 .buttong button {
     padding: 12px;   
-    border: none;              /* Remove default border */
+    border: none;    
+    background: none;
+    width: 100%;
+  border: none;
+  display: block;          /* Remove default border */
     border-radius: 8px;        /* Add border radius for rounded corners */
     color: white;              /* Set text color */
-    font-size: 16px;           /* Set font size */
+    font-size: 15px;           /* Set font size */
     cursor: pointer;           /* Change cursor to pointer on hover */
     transition: background-color 0.3s ease; /* Add transition for background color change */
 }
@@ -175,17 +181,17 @@ input:focus {
     }
 
     h2 {
-        font-size: 20px;
+        font-size: 15px;
     }
 
     input {
         padding: 8px;
-        font-size: 14px;
+        font-size: 15px;
     }
 
     button {
         padding: 10px;
-        font-size: 14px;
+        font-size: 15px;
     }
 }
 

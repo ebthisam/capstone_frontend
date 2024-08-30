@@ -1,13 +1,15 @@
 import { Component, OnInit, HostListener, Inject, PLATFORM_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { routes } from '../app.routes';
+import { Router } from '@angular/router';
+import { CategoryService } from '../category.service';
+import { Category } from '../category';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule, RouterOutlet, RouterModule],
+  imports: [IonicModule, RouterOutlet, RouterModule,CommonModule,RouterLink],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -16,17 +18,41 @@ export class HomeComponent implements OnInit {
 
   lastScrolledPos: number = 0;
   isBrowser: boolean;
+  categories: Category[] = [];
+  showCategoriesDropdown = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private categoryService: CategoryService,private router: Router) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+  toggleCategoriesDropdown(show: boolean): void {
+    this.showCategoriesDropdown = show;
   }
 
   ngOnInit(): void {
+    this.loadCategories();
     if (this.isBrowser) {
       this.addEventListeners();
       this.scrollReveal(); // Initial call
     }
   }
+
+  onCategorySelect(event: Event) {
+    const selectedCategoryId = (event.target as HTMLSelectElement).value;
+    console.log('Selected Category ID:', selectedCategoryId);
+    // You can add additional logic here based on the selected category
+  }
+  
+
+  loadCategories(): void {
+    this.categoryService.getAllCategories().subscribe(
+      (data: Category[]) => {
+        this.categories = data;
+      },
+     
+    );
+  }
+
+
 
   addEventListeners(): void {
     const navTogglers = document.querySelectorAll("[data-nav-toggler]");
@@ -40,6 +66,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  
   addEventOnElem(elem: NodeListOf<Element>, type: string, callback: EventListener): void {
     elem.forEach(element => {
       element.addEventListener(type, callback);
