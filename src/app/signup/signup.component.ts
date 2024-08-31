@@ -5,6 +5,7 @@ import { Vendor } from '../vendor';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -42,7 +43,8 @@ export class SignupComponent {
 
   constructor(
     private userService: UserService,
-    private vendorService: VendorService
+    private vendorService: VendorService,
+    private router:Router
   ) {}
 
   onRoleChange() {
@@ -72,7 +74,7 @@ export class SignupComponent {
         this.vendorService.registerVendor(this.vendorData).subscribe({
           next: (response) => {
             console.log('Vendor registered successfully:', response);
-            alert('Vendor Signed up Successfully!');
+            this.router.navigate(['/login']);
           },
           error: (error) => {
             console.error('Error registering vendor:', error);
@@ -82,7 +84,8 @@ export class SignupComponent {
         this.userService.registerUser(this.formData).subscribe({
           next: (response) => {
             console.log('User registered successfully:', response);
-            alert('User Signed up Successfully!');
+            this.router.navigate(['/login']);
+
           },
           error: (error) => {
             console.error('Error registering user:', error);

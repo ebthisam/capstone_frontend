@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 
 class User {
@@ -25,7 +26,7 @@ export class UserService {
   } | null = null;
   private apiUrl = 'http://localhost:5001/api/users';  // Adjust this URL based on your backend configuration
 
-  constructor(private http: HttpClient) {}  // Inject HttpClient for making HTTP requests
+  constructor(private http: HttpClient,private router:Router) {}  // Inject HttpClient for making HTTP requests
 
   setFormData(data: {
     username: string;
@@ -50,6 +51,10 @@ export class UserService {
 
   loginUser(email: string, password: string): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/login`, { email, password });
+  }
+  signOut(){
+    localStorage.removeItem('token');
+    this.router.navigate(['/home']);
   }
 }
 

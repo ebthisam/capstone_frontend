@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CategoryService } from '../category.service';
 import { Category } from '../category';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
   categories: Category[] = [];
   showCategoriesDropdown = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private categoryService: CategoryService,private router: Router) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private categoryService: CategoryService,private router: Router,private userService:UserService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
   toggleCategoriesDropdown(show: boolean): void {
@@ -126,4 +127,5 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+ 
 }

@@ -7,6 +7,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { VendorComponent } from './vendor/vendor.component';
+import { LandingComponent } from './landing/landing.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +18,7 @@ import { HomeComponent } from './home/home.component';
     SignupComponent,
     LoginComponent,
     ChangePasswordComponent,
-    ForgotPasswordComponent,CommonModule,HttpClientModule,HomeComponent],
+    ForgotPasswordComponent,CommonModule,HttpClientModule,HomeComponent,ProductListComponent,VendorComponent,LandingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

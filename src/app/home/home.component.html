@@ -4,7 +4,7 @@
     - #HEADER
   -->
 <div class="maincontainer">
-  <header class="header">
+  <header id="home" class="header">
 
     <div class="alert">
       <div class="container">
@@ -34,6 +34,7 @@
         </a>
 
         <div class="header-actions">
+     
 
           <button class="header-action-btn" aria-label="user" routerLink="/login">
             <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
@@ -46,7 +47,7 @@
           </button>
 
           <button class="header-action-btn" aria-label="cart item">
-            <data class="btn-text" value="0">$0.00</data>
+            <data class="btn-text" value="0">{{0.00|currency:'INR'}}</data>
 
             <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
 
@@ -99,7 +100,7 @@
 
       <div class="wrapper">
         <a href="#" class="logo">
-          <img style="background-image: url('./assets/images/logo.png')" width="179" height="26" alt="Glowing">
+          <img style="background-image: url('./assets/images/logo.png')" width="179" height="26" alt="HometownHub">
         </a>
 
         <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
@@ -139,28 +140,31 @@
         - #HERO
       -->
 
-      <section class="section hero" id="home" aria-label="hero" data-section>
+      <section class="section hero"  aria-label="hero" data-section>
         <div class="container">
 
           <ul class="has-scrollbar">
 
             <li class="scrollbar-item">
-              <div class="hero-card has-bg-image" style="background-image: url('./assets/images/hero-banner-1.webp')">
+              <div class="hero-card has-bg-image" style="background-image: url('./assets/images/hero-banner-1.webp' )">
 
                 <div class="card-content1">
 
                   <h1 class="h1 hero-title">
-                    Reveal The <br>
-                    Beauty of Skin
+                    Nearby Finds,<br>
+                     Delivered Fast
+
+
+
                   </h1>
 
                   <p class="hero-text">
-                    Made using clean, non-toxic ingredients, our products are designed for everyone.
+                    Sourced from trusted vendors, our products are crafted to meet everyone's needs.
                   </p>
 
-                  <p class="price">Starting at $7.99</p>
+                  <p class="price">Starting at {{99|currency:'INR'}}</p>
 
-                  <a href="#" class="btn btn-primary">Shop Now</a>
+                  <a href="#" [routerLink]="['/products', 1]"  class="btn btn-primary">Shop Now</a>
 
                 </div>
 
@@ -168,8 +172,8 @@
             </li>
 
     
-            <li class="scrollbar-item">
-              <div class="hero-card has-bg-image" style="background-image: url('./assets/images/hero-banner-3.jpg')">
+            <!-- <li class="scrollbar-item">
+              <div class="hero-card has-bg-image" style="background-image: url('./assets/images/hero-banner-3.jpg') ;  object-fit: scale-down ">
 
                 <div class="card-content">
 
@@ -189,7 +193,7 @@
                 </div>
 
               </div>
-            </li>
+            </li> -->
 
           </ul>
 

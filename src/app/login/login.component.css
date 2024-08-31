@@ -12,12 +12,12 @@
   
 /* Main Container */
 .main-container {
-    height: 100vh;
+    height: 200vh;
+    align-items: baseline;
+
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: first baseline;
     padding: 20px;
-    background: linear-gradient(to right, #f3e7e9 10%, #e3eeff 30%, #f4f9f9 50%, #d9f7ff 70%, #e0f7fa 100%);
 }
 
 /* Form Container */
@@ -99,17 +99,22 @@ input:focus {
 .buttonng {
     width: 100%;
     padding: 12px;
-    background-color: #987070;
+    margin-top: 17px;
+
+    background-color: var(--pale-spring-bud);
     border: none;
     border-radius: 8px;
-    color: white;
+    color: black;
     font-size: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+.logo { margin-inline-end: 60px;
+    size: 4px;
+width: fit-content; }
 
 .buttonng:hover {
-    background-color: #775757;
+    background-color: rgb(205, 206, 135);
 }
 
 /* Forgot Password Link */

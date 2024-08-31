@@ -25,6 +25,9 @@ a {
 
 img {
   height: auto;
+  width: 275px;
+
+
 }
 
 input, button {
@@ -1195,7 +1198,8 @@ input, button {
   
     .header .search-submit ion-icon { --ionicon-stroke-width: 40px; }
   
-    .header .logo { margin-inline-end: 60px; }
+    .header .logo { margin-inline-end: 60px;
+    size: 4px; }
   
     .header-actions {
       display: flex;

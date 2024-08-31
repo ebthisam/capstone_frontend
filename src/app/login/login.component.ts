@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { VendorService } from '../vendor.service';
+import { Router } from '@angular/router';
 
 declare var google: any;
 
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private vendorService: VendorService,
     private renderer: Renderer2,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -37,14 +39,15 @@ export class LoginComponent implements OnInit {
       this.loadGoogleScript();
     }
   }
-
   onLogin() {
     if (this.role === 'User') {
       this.userService.loginUser(this.email, this.password).subscribe({
         next: (response) => {
           console.log('User login successful:', response);
-          alert('User Login Successful.');
           this.loginFailed = false;
+          localStorage.setItem('token', "thisa");
+          localStorage.setItem('role', 'User'); // Store the role in localStorage
+          this.router.navigate(['/home']); // Navigate to the user's home page after login
         },
         error: (error) => {
           console.error('User login failed:', error);
@@ -55,8 +58,10 @@ export class LoginComponent implements OnInit {
       this.vendorService.loginVendor(this.email, this.password).subscribe({
         next: (response) => {
           console.log('Vendor login successful:', response);
-          alert('Vendor Login Successful.');
           this.loginFailed = false;
+          localStorage.setItem('token', "thisa");
+          localStorage.setItem('role', 'Vendor'); // Store the role in localStorage
+          this.router.navigate(['/vendor']); // Navigate to the vendor dashboard after login
         },
         error: (error) => {
           console.error('Vendor login failed:', error);
@@ -68,6 +73,7 @@ export class LoginComponent implements OnInit {
       console.error('Role not selected or invalid role.');
     }
   }
+  
 
   loadGoogleScript() {
     const script = this.renderer.createElement('script');
