@@ -1,0 +1,148 @@
+<header class="header">
+
+    <div class="alert">
+      <div class="container">
+        <p class="alert-text">Free Shipping Across India on Orders Above ₹299!</p>
+      </div>
+    </div>
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="#" class="logo">
+          <img class="logoimage" src="/assets/images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <div class="header-actions">
+               
+          <button class="header-action-btn" aria-label="user" (click)="signOut()">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+          <button class="header-action-btn" aria-label="user" routerLink="/login">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+          <button class="header-action-btn" aria-label="favourite item">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item">
+            <data class="btn-text" value="0">{{0.00}}|currency:'INR'</data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button>
+
+        </div>
+
+    
+
+      </div>
+    </div>
+
+  </header>
+ 
+
+
+
+
+<div class="vendor-page">
+    <!-- Sidebar with vendor actions -->
+<aside class="categories-sidebar">
+    <h3>Vendor Actions</h3>
+    <ul>
+      <li><a (click)="createProduct()" class="dropdown-item">Create a New Product</a></li>
+      <li><a (click)="viewProducts()" class="dropdown-item">View All Products</a></li>
+      <li><a (click)="updateProduct()" class="dropdown-item">Update Product</a></li>
+      <li><a (click)="deleteProduct()" class="dropdown-item">Delete Product</a></li>
+      <li><a (click)="viewReviews()" class="dropdown-item">View Product Reviews</a></li>
+      <li><a (click)="checkStock()" class="dropdown-item">Check Stock Details</a></li>
+    </ul>
+  </aside>
+  
+
+<!-- Main content area for vendor actions -->
+<main class="vendor-actions-main">
+  <h2>Vendor Dashboard</h2>
+  <div *ngIf="currentAction === 'create'" class="action-content">
+    <h3>Create a New Product</h3>
+    <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
+      <div>
+        <label for="name">Product Name:</label>
+        <input id="name" formControlName="name" type="text" required>
+      </div>
+  
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" formControlName="description" required></textarea>
+      </div>
+  
+      <div>
+        <label for="price">Price:</label>
+        <input id="price" formControlName="price" type="number" required>
+      </div>
+  
+      <div>
+        <label for="categoryId">Category ID:</label>
+        <input id="categoryId" formControlName="categoryId" type="text" required>
+      </div>
+  
+      <div>
+        <label for="vendorId">Vendor ID:</label>
+        <input id="vendorId" formControlName="vendorId" type="text" required>
+      </div>
+  
+      <div>
+        <label for="stockQuantity">Stock Quantity:</label>
+        <input id="stockQuantity" formControlName="stockQuantity" type="number" required>
+      </div>
+  
+      <div>
+        <label for="imageUrl">Image URL:</label>
+        <input id="imageUrl" formControlName="imageUrl" type="text" required>
+      </div>
+  
+      <button type="submit" class="btn-primary">Create Product</button>
+    </form>
+  </div>
+  
+  <div *ngIf="currentAction === 'products'" class="action-content">
+    <h3>View All Products</h3>
+    <!-- Content for viewing all products -->
+  </div>
+  <div *ngIf="currentAction === 'update'" class="action-content">
+    <h3>Update Product</h3>
+    <!-- Form or content for updating a product -->
+  </div>
+  <div *ngIf="currentAction === 'delete'" class="action-content">
+    <h3>Delete Product</h3>
+    <!-- Content or confirmation for deleting a product -->
+  </div>
+  <div *ngIf="currentAction === 'reviews'" class="action-content">
+    <h3>View Product Reviews</h3>
+    <!-- Content for viewing product reviews -->
+  </div>
+  <div *ngIf="currentAction === 'stock'" class="action-content">
+    <h3>Check Stock Details</h3>
+    <!-- Content for checking stock details -->
+  </div>
+</main>
+</div>
