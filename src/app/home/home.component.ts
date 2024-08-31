@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../category.service';
 import { Category } from '../category';
 import { UserService } from '../user.service';
+import { ActivatedRoute } from '@angular/router';
+import { Product } from '../product';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-home',
@@ -21,20 +24,32 @@ export class HomeComponent implements OnInit {
   isBrowser: boolean;
   categories: Category[] = [];
   showCategoriesDropdown = false;
+  products: Product[]=[];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private categoryService: CategoryService,private router: Router,private userService:UserService) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private productService: ProductService,private categoryService: CategoryService,private router: Router,private userService:UserService ,private route:ActivatedRoute) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
+
   toggleCategoriesDropdown(show: boolean): void {
     this.showCategoriesDropdown = show;
   }
 
   ngOnInit(): void {
     this.loadCategories();
+    this.loadProducts();
+
     if (this.isBrowser) {
       this.addEventListeners();
       this.scrollReveal(); // Initial call
     }
+    this.route.fragment.subscribe((fragment) => {
+      if (fragment) {
+        const element = document.getElementById(fragment);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
   }
 
   onCategorySelect(event: Event) {
@@ -118,6 +133,7 @@ export class HomeComponent implements OnInit {
     }
     this.lastScrolledPos = window.scrollY;
   }
+  
 
   scrollReveal(): void {
     const sections = document.querySelectorAll("[data-section]");
@@ -126,6 +142,23 @@ export class HomeComponent implements OnInit {
         section.classList.add("active");
       }
     });
+  }
+
+
+  loadProducts(): void {
+    this.productService.getAllProducts().subscribe(
+      (data: Product[]) => {
+        this.products = data;
+      },
+      (error) => {
+        console.error('Failed to load products:', error);
+      }
+    );
+  }
+  signOut(){
+    this.userService.signOut();
+
+
   }
  
 }

@@ -10,16 +10,15 @@ import { AuthGuard } from './auth.guard';
 import { LandingComponent } from './landing/landing.component';
 
 export const routes: Routes = [
-  // { path: '', redirectTo: '/home', pathMatch: 'full' }, // Default route redirects to HomeComponent
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
-  {path:'landing',component:LandingComponent},
+  { path: 'landing', component: LandingComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
   { path: 'vendor', component: VendorComponent, canActivate: [AuthGuard], data: { expectedRole: 'Vendor' } },
-     { path: 'products/:categoryId', component: ProductListComponent,canActivate: [AuthGuard] },
+  { path: 'products/:categoryId', component: ProductListComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: '**', redirectTo: '404NotFoundException' },                   // Wildcard route redirects to HomeComponent
+  { path: '**', redirectTo: '/landing' },
 ];
 
 @NgModule({

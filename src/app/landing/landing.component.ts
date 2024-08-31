@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, Inject, PLATFORM_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CategoryService } from '../category.service';
@@ -22,7 +22,7 @@ export class LandingComponent implements OnInit {
   categories: Category[] = [];
   showCategoriesDropdown = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private categoryService: CategoryService,private router: Router,private userService:UserService) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private categoryService: CategoryService,private router: Router,private userService:UserService,private route:ActivatedRoute) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
   toggleCategoriesDropdown(show: boolean): void {

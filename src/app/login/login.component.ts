@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   role: string = '';
   email: string = '';
   password: string = '';
+  token: string='';
   loginFailed: boolean = false;
 
   constructor(
@@ -46,8 +47,8 @@ export class LoginComponent implements OnInit {
           console.log('User login successful:', response);
           this.loginFailed = false;
           localStorage.setItem('token', "thisa");
-          localStorage.setItem('role', 'User'); // Store the role in localStorage
-          this.router.navigate(['/home']); // Navigate to the user's home page after login
+          localStorage.setItem('role', 'User'); 
+          this.router.navigate(['/home']); 
         },
         error: (error) => {
           console.error('User login failed:', error);
@@ -59,9 +60,10 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           console.log('Vendor login successful:', response);
           this.loginFailed = false;
-          localStorage.setItem('token', "thisa");
-          localStorage.setItem('role', 'Vendor'); // Store the role in localStorage
-          this.router.navigate(['/vendor']); // Navigate to the vendor dashboard after login
+          localStorage.setItem('token', 'thisa'); 
+          localStorage.setItem('role', 'Vendor');
+          localStorage.setItem('vendorId', response.id!); 
+          this.router.navigate(['/vendor']); 
         },
         error: (error) => {
           console.error('Vendor login failed:', error);
@@ -73,6 +75,7 @@ export class LoginComponent implements OnInit {
       console.error('Role not selected or invalid role.');
     }
   }
+  
   
 
   loadGoogleScript() {

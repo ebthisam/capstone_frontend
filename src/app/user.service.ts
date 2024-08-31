@@ -52,9 +52,10 @@ export class UserService {
   loginUser(email: string, password: string): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/login`, { email, password });
   }
-  signOut(){
+  signOut(): void {
     localStorage.removeItem('token');
-    this.router.navigate(['/home']);
+    localStorage.removeItem('role');
+    this.router.navigate(['/landing']);
   }
 }
 

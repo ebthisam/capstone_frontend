@@ -1,28 +1,40 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-
-    if (token) {
-      const expectedRole = route.data['expectedRole'];
-      if (role === expectedRole) {
-        return true;
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role');
+      console.log('Token:', token);
+      console.log('Role:', role);
+      console.log('Expected Role:', route.data['expectedRole']);
+  
+      if (token) {
+        const expectedRole = route.data['expectedRole'];
+        if (role === expectedRole) {
+          return true;
+        } else {
+          console.log('Role mismatch, redirecting to landing...');
+          this.router.navigate(['/landing']);
+          return false;
+        }
       } else {
-        // Redirect to an appropriate page if the role doesn't match
-        this.router.navigate(['/login']); // or redirect to a specific page
+        console.log('No token found, redirecting to landing...');
+        this.router.navigate(['/landing']);
         return false;
       }
     } else {
-      this.router.navigate(['/login']);
+      console.log('Not running in browser, redirecting to landing...');
+      this.router.navigate(['/landing']);
       return false;
     }
   }
+  
 }
