@@ -2,45 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { User } from './user';
 
-class User {
-  constructor(
-    public username: string,
-    public password: string,
-    public email: string,
-    public phone: string = '',
-    public address: string = ''  // Added role field
-  ) {}
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private formData: {
-    username: string;
-    password: string;
-    email: string;
-    phone: string;
-    address: string;
-  } | null = null;
+ 
   private apiUrl = 'http://localhost:5001/api/users';  // Adjust this URL based on your backend configuration
 
   constructor(private http: HttpClient,private router:Router) {}  // Inject HttpClient for making HTTP requests
 
-  setFormData(data: {
-    username: string;
-    password: string;
-    email: string;
-    phone: string;
-    address: string;
-  }) {
-    this.formData = data;
-  }
-
-  getFormData() {
-    return this.formData;
-  }
 
 
  
@@ -51,6 +24,36 @@ export class UserService {
 
   loginUser(email: string, password: string): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/login`, { email, password });
+  }
+
+   // Get user profile by email
+  getUserProfile(email: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${email}`);
+  }
+
+  // Update user profile by email
+  updateUserProfile(email: string, userDetails: Partial<User>): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${email}`, userDetails);
+  }
+
+  // Get all orders by user ID
+  getUserOrders(userId: string): Observable<any[]> {  // Replace 'any[]' with your order model if available
+    return this.http.get<any[]>(`${this.apiUrl}/${userId}/orders`);
+  }
+
+  // Get all users (for admin purposes, etc.)
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  // Get user by ID
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/id/${id}`);
+  }
+
+  // Delete user by email
+  deleteUser(email: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${email}`);
   }
   signOut(): void {
     localStorage.removeItem('token');

@@ -3,7 +3,7 @@
   <!-- 
     - #HEADER
   -->
-<div class="maincontainer">
+<div id="top" class="maincontainer">
   <header id="home" class="header">
 
     <div class="alert">
@@ -36,22 +36,19 @@
         <div class="header-actions">
      
 
-          <button class="header-action-btn" aria-label="user" routerLink="/login">
+          <button class="header-action-btn" aria-label="user" routerLink="/profile">
             <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
           </button>
 
-          <button class="header-action-btn" aria-label="favourite item">
-            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
-
-            <span class="btn-badge">0</span>
-          </button>
-
-          <button class="header-action-btn" aria-label="cart item">
+          <button class="header-action-btn" aria-label="cart item" routerLink="/order-item">
 
             <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
 
-            <span class="btn-badge">0</span>
           </button>
+
+
+
+          
           <button class="header-action-btn" aria-label="user" (click)="signOut()">
             <ion-icon name="log-out-outline"></ion-icon></button>
 
@@ -180,29 +177,6 @@
             </li>
 
     
-            <!-- <li class="scrollbar-item">
-              <div class="hero-card has-bg-image" style="background-image: url('./assets/images/hero-banner-3.jpg') ;  object-fit: scale-down ">
-
-                <div class="card-content">
-
-                  <h1 class="h1 hero-title">
-                    Reveal The <br>
-                    Beauty of Skin
-                  </h1>
-
-                  <p class="hero-text">
-                    Made using clean, non-toxic ingredients, our products are designed for everyone.
-                  </p>
-
-                  <p class="price">Starting at $7.99</p>
-
-                  <a href="#" class="btn btn-primary">Shop Now</a>
-
-                </div>
-
-              </div>
-            </li> -->
-
           </ul>
 
         </div>
@@ -223,22 +197,18 @@
           </div>
       
           <ul class="has-scrollbar">
-            <li class="scrollbar-item" *ngFor="let product of products">
+            <li class="scrollbar-item" *ngFor="let product of products" [routerLink]="['/productsdetails', product.id]">
               <div class="shop-card">
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img [src]="product.imageUrl" width="540" height="720" loading="lazy"
                     [alt]="product.name" class="img-cover">
       
                   <div class="card-actions">
-                    <button class="action-btn" aria-label="add to cart">
+                    <button (click)="addToCart()" class="action-btn" aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
-                    <button class="action-btn" aria-label="add to wishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
+
+                  
                   </div>
                 </div>
       
@@ -252,8 +222,8 @@
                   </h3>
       
                   <div class="card-rating">
-                    <div class="rating-wrapper" [attr.aria-label]="product.reviewIds.length + ' star rating'">
-                      <ion-icon name="star" *ngFor="let star of [1, 2, 3, 4, 5]" aria-hidden="true"></ion-icon>
+                    <div class="rating-wrapper" [attr.aria-label]="product.averageRating + ' star rating'">
+                      {{ product.averageRating | number: '1.1-1' }} ★
                     </div>
                     <p class="rating-text">{{ product.reviewIds.length }} reviews</p>
                   </div>
@@ -541,7 +511,8 @@
     - #BACK TO TOP
   -->
 
-  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+  <a  [routerLink]="['/home']" fragment="home" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+
     <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
   </a>
 

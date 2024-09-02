@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { LandingComponent } from './landing/landing.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ import { LandingComponent } from './landing/landing.component';
   imports: [RouterOutlet,
     SignupComponent,
     LoginComponent,
-    ChangePasswordComponent,
+    ChangePasswordComponent,RouterModule,
     ForgotPasswordComponent,CommonModule,HttpClientModule,HomeComponent,ProductListComponent,VendorComponent,LandingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

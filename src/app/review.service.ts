@@ -7,7 +7,7 @@ import { Review} from './review';
   providedIn: 'root'
 })
 export class ReviewService {
-  private apiUrl = 'http://localhost:8080/api/reviews'; // Change the URL to your backend base URL
+  private apiUrl = 'http://localhost:5003/api/reviews'; // Change the URL to your backend base URL
 
   constructor(private http: HttpClient) {}
 

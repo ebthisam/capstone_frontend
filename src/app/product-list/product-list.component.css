@@ -76,7 +76,23 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-5px);
 }
+.updatebtn{
+  padding: 10px 20px;
+  background-color: var(--pale-spring-bud);
+color: black;
+font-size: var(--fs-7);
+border: none;
+border-radius: var(--radius-3);
+cursor: pointer;
+transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
+
+}
+.updatebtn:hover{
+  background-color: rgb(205, 206, 135);
+  box-shadow: var(--shadow-1);
+
+}
 .product-image {
     width: 100%;
     height: 250px;

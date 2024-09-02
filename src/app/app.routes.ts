@@ -8,6 +8,9 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { AuthGuard } from './auth.guard';
 import { LandingComponent } from './landing/landing.component';
+import { ProfileComponent } from './profile/profile.component';
+import { OrderItemComponent } from './order-item/order-item.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -15,6 +18,10 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
   { path: 'vendor', component: VendorComponent, canActivate: [AuthGuard], data: { expectedRole: 'Vendor' } },
   { path: 'products/:categoryId', component: ProductListComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
+  { path: 'order-item', component: OrderItemComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
+  { path: 'productsdetails/:id', component: ProductDetailsComponent ,canActivate: [AuthGuard], data: { expectedRole: 'User' } }, // Route for product details
+
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },

@@ -46,8 +46,11 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           console.log('User login successful:', response);
           this.loginFailed = false;
-          localStorage.setItem('token', "thisa");
-          localStorage.setItem('role', 'User'); 
+          localStorage.setItem('token', 'thisa'); 
+          localStorage.setItem('role', 'User');
+          localStorage.setItem('userId', response.id!); 
+          localStorage.setItem('username',response.username);
+          localStorage.setItem('userEmail',response.email);
           this.router.navigate(['/home']); 
         },
         error: (error) => {
@@ -63,6 +66,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', 'thisa'); 
           localStorage.setItem('role', 'Vendor');
           localStorage.setItem('vendorId', response.id!); 
+          localStorage.setItem('vendorname',response.name);
+          localStorage.setItem('vendorEmail',response.contactMail);
           this.router.navigate(['/vendor']); 
         },
         error: (error) => {

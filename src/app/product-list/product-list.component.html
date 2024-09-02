@@ -29,9 +29,10 @@
 
         <div class="header-actions">
 
-          <button class="header-action-btn" aria-label="user" routerLink="/login">
+          <button class="header-action-btn" aria-label="user" routerLink="/profile">
             <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
           </button>
+
 
           <button class="header-action-btn" aria-label="favourite item">
             <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
@@ -55,33 +56,30 @@
     </div>
 
   </header>
-  <div class="product-list-page">
-    <!-- Sidebar with categories -->
-    <aside class="categories-sidebar">
-      <h3>Categories</h3>
-      <ul>
-        <li *ngFor="let category of categories">
-            <a [routerLink]="['/products', category.id]" class="dropdown-item">{{ category.name }}</a>
-          </li>
-      </ul>
-    </aside>
-  
-    <!-- Main content with products -->
-    <main class="products-main">
-      <h2>Products</h2>
-      <div *ngIf="products.length; else noProducts" class="products-grid">
-        <div *ngFor="let product of products" class="product-card">
-          <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image">
-          <div class="product-details">
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
-            <p class="product-price">{{ product.price |currency:'INR' }}</p>
-          </div>
+ <div class="product-list-page">
+  <aside class="categories-sidebar">
+    <h3>Categories</h3>
+    <ul>
+      <li *ngFor="let category of categories">
+        <a [routerLink]="['/products', category.id]" class="dropdown-item">{{ category.name }}</a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="products-main">
+    <h2>Products</h2>
+    <div *ngIf="products.length; else noProducts" class="products-grid">
+      <div *ngFor="let product of products" class="product-card" [routerLink]="['/productsdetails', product.id]">
+        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image">
+        <div class="product-details">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <p class="product-price">{{ product.price | currency:'INR' }}</p>
         </div>
       </div>
-      <ng-template #noProducts>
-        <p>No products found for this category.</p>
-      </ng-template>
-    </main>
-  </div>
-  
+    </div>
+    <ng-template #noProducts>
+      <p>No products found for this category.</p>
+    </ng-template>
+  </main>
+</div>

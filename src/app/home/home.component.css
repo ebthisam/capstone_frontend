@@ -1228,12 +1228,11 @@ input, button {
       gap: 10px;
     }
   
-    .header-action-btn .btn-text {
-      font-size: var(--fs-7);
-      font-weight: var(--fw-700);
-      margin-block-start: 3px;
-    }
-  
+   .header-action-btn .btn-text {
+    font-size: var(--fs-7);
+    font-weight: var(--fw-700);
+    margin-block-start: 3px;
+  }
     .navbar {
       position: relative;
       bottom: 0;
