@@ -40,18 +40,21 @@ export class LoginComponent implements OnInit {
       this.loadGoogleScript();
     }
   }
+ 
   onLogin() {
     if (this.role === 'User') {
       this.userService.loginUser(this.email, this.password).subscribe({
-        next: (response) => {
+        next: (response: any) => {  // Type your response appropriately if known
           console.log('User login successful:', response);
           this.loginFailed = false;
-          localStorage.setItem('token', 'thisa'); 
+          localStorage.setItem('token', response.token); // Store JWT token
           localStorage.setItem('role', 'User');
-          localStorage.setItem('userId', response.id!); 
-          localStorage.setItem('username',response.username);
-          localStorage.setItem('userEmail',response.email);
-          this.router.navigate(['/home']); 
+          localStorage.setItem('userId', response.user.id); // Access user ID from the user object
+          localStorage.setItem('username', response.user.username); // Store username
+          localStorage.setItem('userEmail', response.user.email); // Store email
+          localStorage.setItem('userPhone', response.user.phone); // Store phone
+          localStorage.setItem('userAddress', response.user.address); // Store address
+          this.router.navigate(['/home']); // Navigate to home upon successful login
         },
         error: (error) => {
           console.error('User login failed:', error);
@@ -60,15 +63,17 @@ export class LoginComponent implements OnInit {
       });
     } else if (this.role === 'Vendor') {
       this.vendorService.loginVendor(this.email, this.password).subscribe({
-        next: (response) => {
+        next: (response: any) => {  // Type your response appropriately if known
           console.log('Vendor login successful:', response);
           this.loginFailed = false;
-          localStorage.setItem('token', 'thisa'); 
+          localStorage.setItem('token', response.token); // Store JWT token
           localStorage.setItem('role', 'Vendor');
-          localStorage.setItem('vendorId', response.id!); 
-          localStorage.setItem('vendorname',response.name);
-          localStorage.setItem('vendorEmail',response.contactMail);
-          this.router.navigate(['/vendor']); 
+          localStorage.setItem('vendorId', response.id); // Access vendor ID from the user object
+          localStorage.setItem('vendorName', response.username); // Assuming username is used for the vendor name
+          localStorage.setItem('vendorEmail', response.email); // Store email
+          localStorage.setItem('vendorPhone', response.phone); // Store phone
+          localStorage.setItem('vendorAddress', response.address); // Store address
+          this.router.navigate(['/vendor']); // Navigate to vendor dashboard upon successful login
         },
         error: (error) => {
           console.error('Vendor login failed:', error);
@@ -76,8 +81,8 @@ export class LoginComponent implements OnInit {
         }
       });
     } else {
-      this.loginFailed = true;
       console.error('Role not selected or invalid role.');
+      this.loginFailed = true;
     }
   }
   

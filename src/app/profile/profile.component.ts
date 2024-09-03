@@ -96,6 +96,7 @@ export class ProfileComponent implements OnInit {
   viewOrders(): void {
     if (this.userId) {
       this.currentAction = 'orders';
+      console.log(this.userId);
       this.userService.getUserOrders(this.userId).subscribe({
         next: (orders) => {
           // Load orders and fetch product details

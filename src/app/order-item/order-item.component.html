@@ -24,7 +24,9 @@
             <div class="order-items">
               <div class="order-item">
                 <p><strong>Item {{ i + 1 }}:</strong></p> <!-- Display item number -->
+                
                 <img [src]="item.productImage" alt="{{ item.productName }}" class="product-image">
+
                 <div class="item-details">
                   <p><strong>{{ item.productName }}</strong></p>
                   <p>Price: {{ item.price | currency:'INR' }}</p>

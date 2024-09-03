@@ -11,6 +11,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { LandingComponent } from './landing/landing.component';
 import { RouterModule } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,7 @@ import { RouterModule } from '@angular/router';
     SignupComponent,
     LoginComponent,
     ChangePasswordComponent,RouterModule,
+
     ForgotPasswordComponent,CommonModule,HttpClientModule,HomeComponent,ProductListComponent,VendorComponent,LandingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

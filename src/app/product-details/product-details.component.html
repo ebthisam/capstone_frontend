@@ -49,6 +49,9 @@
             <p>{{ product?.description }}</p>
             <p class="product-price">{{ product?.price | currency:'INR' }}</p>
             <button (click)="addToCart()" class="updatebtn">Add to Cart</button>
+            <p *ngIf="isLowStock()" class="stock-info low-stock">
+                Only {{ product?.stockQuantity }} left in stock!
+            </p>
         </div>
     </div>
 

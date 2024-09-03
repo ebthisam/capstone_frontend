@@ -12,11 +12,12 @@ import { ProductService } from '../product.service';
 import { Review } from '../review';
 import { VendorService } from '../vendor.service';
 import { Vendor } from '../vendor';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule, RouterOutlet, RouterModule,CommonModule,RouterLink],
+  imports: [IonicModule, RouterOutlet, RouterModule,CommonModule,RouterLink,FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -34,10 +35,19 @@ export class HomeComponent implements OnInit {
   products: Product[]=[];
    totalAmount = localStorage.getItem('totalAmount');
    vendors: Vendor[] = [];
+  filteredProducts: any;
+  selectedPriceRange: any;
+  searchQuery: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private productService: ProductService,private categoryService: CategoryService,private router: Router,private userService:UserService ,private route:ActivatedRoute,private vendorService:VendorService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
+  chatbotVisible: boolean = false;
+
+  toggleChatbot(): void {
+    this.chatbotVisible = !this.chatbotVisible;
+  }
+
 
   toggleCategoriesDropdown(show: boolean): void {
     this.showCategoriesDropdown = show;
@@ -49,6 +59,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.totalAmount = localStorage.getItem('totalAmount') || '0'; // Default to '0' if not found
 
+    
     this.loadCategories();
     this.loadProducts();
     this.loadVendors();  // Load vendors
@@ -227,5 +238,29 @@ export class HomeComponent implements OnInit {
     console.log('Item added to cart');
   }
   
+  onSearch(): void {
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    // Filter by price range
+    let filteredByPrice = this.products;
+    if (this.selectedPriceRange) {
+      const [minPrice, maxPrice] = this.selectedPriceRange.split('-').map((price: string) => parseFloat(price));
+      filteredByPrice = filteredByPrice.filter(product => product.price >= minPrice && product.price <= maxPrice);
+    }
+
+    // Filter by search query
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      this.filteredProducts = filteredByPrice.filter(product => 
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
+      );
+    } else {
+      this.filteredProducts = filteredByPrice;
+    }
+
+  }
  
 }

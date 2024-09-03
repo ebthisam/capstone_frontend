@@ -120,6 +120,10 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
   }
+
+  isLowStock() {
+    return this.product && this.product.stockQuantity < 5;
+  }
   
   signOut(): void {
     // Implement sign-out logic

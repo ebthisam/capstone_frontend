@@ -54,6 +54,7 @@ export class VendorComponent implements OnInit {
       description: ['', Validators.required],
       price: [null, Validators.required],
       categoryId: ['', Validators.required],
+      vendorId:['',Validators.required],
       stockQuantity: [null, Validators.required],
       imageUrl: ['', Validators.required],
     });
@@ -142,14 +143,23 @@ export class VendorComponent implements OnInit {
 
   onUpdateProduct(productId: string) {
     if (this.updateForms[productId]?.valid) {
-      const updatedProduct = this.updateForms[productId].value;
+      const vendorId = localStorage.getItem('vendorId'); // Fetch vendorId from localStorage
+      if (!vendorId) {
+        alert('Vendor ID is missing. Please log in again.');
+        return;
+      }
+  
+      const updatedProduct = {
+        ...this.updateForms[productId].value,
+        vendorId: vendorId // Ensure the vendorId is included in the payload
+      };
+  
       this.productService.updateProduct(productId, updatedProduct).subscribe({
         next: (response) => {
           console.log('Product updated successfully:', response);
           alert('Product updated successfully.');
           this.loadVendorProducts(); // Refresh the product list after update
           this.activeUpdateForm = null; // Hide the form after updating
-
         },
         error: (error) => {
           console.error('Error updating product:', error);
@@ -158,6 +168,7 @@ export class VendorComponent implements OnInit {
       });
     }
   }
+  
   deleteProductbyId(productId: string): void {
     const confirmation = confirm('Do you really want to delete this product?');
     if (confirmation) {

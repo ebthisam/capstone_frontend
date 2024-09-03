@@ -9,6 +9,7 @@ export class Product {
     imageUrl: string;
     reviewIds: string[] = [];
     averageRating?: number; // Optional property to hold the average rating
+  quantity: any;
 
   
     constructor(id: string, name: string, description: string, price: number, categoryId: string, vendorId: string, stockQuantity: number, imageUrl: string, reviewIds: string[] = []) {
