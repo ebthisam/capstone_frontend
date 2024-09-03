@@ -1,69 +1,64 @@
 import { ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CategoryService } from '../category.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { VendorService } from '../vendor.service'; // Update service to VendorService
 import { CommonModule } from '@angular/common';
 import { Product } from '../product';
-import { Category } from '../category';
-import { Router } from '@angular/router';
+import { Vendor } from '../vendor'; // Update import to Vendor
+import { ProductService } from '../product.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-product-list',
+  selector: 'app-vendor-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterLink,FormsModule],
-  templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  imports: [CommonModule,RouterModule,FormsModule],
+  templateUrl: './vendor-list.component.html',
+  styleUrls: ['./vendor-list.component.css'] // Fixed typo: styleUrls
 })
-export class ProductListComponent implements OnInit {
+export class VendorListComponent implements OnInit {
   products: Product[] = [];
-  categories: Category[] = [];
+  vendors: Vendor[] = []; // Changed from Category[] to Vendor[]
   selectedPriceRange: string = '';
   filteredProducts: Product[] = [];
-  searchQuery: any;
+  searchQuery: string = ''; // Property for the search query
+
 
   constructor(
     private route: ActivatedRoute,
-    private categoryService: CategoryService,
+    private vendorService: VendorService, // Updated to VendorService
     private router: Router,
-    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
-
+    private cdr: ChangeDetectorRef,
+    private productService:ProductService
   ) {}
 
   ngOnInit(): void {
-    this.loadCategories();
+    this.loadVendors(); // Load vendors
     this.route.params.subscribe(params => {
-      const categoryId = params['categoryId'];
-      this.loadProducts(categoryId);
+      const vendorId = params['vendorId'];
+      this.loadProducts(vendorId);
     });
   }
-  
-  loadProducts(categoryId: string): void {
-    this.categoryService.getProductsByCategoryId(categoryId).subscribe({
+
+  loadProducts(vendorId: string): void {
+    this.productService.getProductsByVendorId(vendorId).subscribe({
       next: (data) => {
         this.products = data;
-        this.filteredProducts = [...this.products]; // Initialize filteredProducts with all products
-        this.applyPriceFilter(); // Apply the filter after loading the products
-        this.cdr.detectChanges(); // Force change detection
-
+        this.filteredProducts = [...this.products];
+        this.applyPriceFilter();
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error fetching products:', err)
     });
   }
-  
-  onCategorySelect(categoryId: string): void {
-    this.router.navigate(['/products', categoryId]);
-  }
- 
-  
-  loadCategories(): void {
-    this.categoryService.getAllCategories().subscribe(
-      categories => {
-        this.categories = categories;
+
+  loadVendors(): void {
+    this.vendorService.listVendors().subscribe(
+      vendors => {
+        this.vendors = vendors;
       },
       error => {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching vendors:', error);
       }
     );
   }
@@ -81,8 +76,8 @@ export class ProductListComponent implements OnInit {
     } else {
       this.filteredProducts = this.products;
     }
-    console.log('Filtered Products:', this.filteredProducts); // Log filtered products
-    this.cdr.detectChanges(); // Force change detection
+    console.log('Filtered Products:', this.filteredProducts);
+    this.cdr.detectChanges();
   }
   onSearch(): void {
     this.applyFilters();
@@ -110,5 +105,4 @@ export class ProductListComponent implements OnInit {
     console.log('Filtered Products:', this.filteredProducts); // Log filtered products
     this.cdr.detectChanges(); // Force change detection
   }
-  
 }

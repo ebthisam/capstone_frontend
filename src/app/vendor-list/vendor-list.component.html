@@ -27,6 +27,7 @@
         </button>
       </div>
       
+
       <a href="/home" class="logo">
         <img class="logoimage" src="/assets/images/logo.png" width="179" height="26" alt="Glowing">
       </a>
@@ -46,10 +47,10 @@
 
 <div class="product-list-page">
   <aside class="sidebar categories-sidebar">
-    <h3 class="sidebar-title">Categories</h3>
+    <h3 class="sidebar-title">Vendors</h3>
     <ul class="sidebar-list">
-      <li *ngFor="let category of categories" class="sidebar-item">
-        <a [routerLink]="['/products', category.id]" class="sidebar-link">{{ category.name }}</a>
+      <li *ngFor="let vendor of vendors" class="sidebar-item">
+        <a [routerLink]="['/vendorproducts', vendor.id]" class="sidebar-link">{{ vendor.name }}</a>
       </li>
     </ul>
   </aside>
@@ -82,7 +83,7 @@
     </div>
 
     <ng-template #noProducts>
-      <p class="no-products-message">No products found for this category.</p>
+      <p class="no-products-message">No products found for this vendor.</p>
     </ng-template>
   </main>
 </div>

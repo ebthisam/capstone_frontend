@@ -10,6 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { Review } from '../review';
+import { VendorService } from '../vendor.service';
+import { Vendor } from '../vendor';
 
 @Component({
   selector: 'app-home',
@@ -26,17 +28,22 @@ export class HomeComponent implements OnInit {
   categories: Category[] = [];
   product: any;
   reviews:Review[]=[];
+  showVendorsDropdown = false;  // Add this line to define the property
 
   showCategoriesDropdown = false;
   products: Product[]=[];
    totalAmount = localStorage.getItem('totalAmount');
+   vendors: Vendor[] = [];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private productService: ProductService,private categoryService: CategoryService,private router: Router,private userService:UserService ,private route:ActivatedRoute) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object,private productService: ProductService,private categoryService: CategoryService,private router: Router,private userService:UserService ,private route:ActivatedRoute,private vendorService:VendorService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   toggleCategoriesDropdown(show: boolean): void {
     this.showCategoriesDropdown = show;
+  }
+  toggleVendorsDropdown(show: boolean): void {
+    this.showVendorsDropdown = show;
   }
 
   ngOnInit(): void {
@@ -44,6 +51,8 @@ export class HomeComponent implements OnInit {
 
     this.loadCategories();
     this.loadProducts();
+    this.loadVendors();  // Load vendors
+
 
     if (this.isBrowser) {
       this.addEventListeners();
@@ -59,6 +68,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  loadVendors(): void {
+    this.vendorService.listVendors().subscribe(
+      (data: Vendor[]) => {
+        this.vendors = data;
+      }
+    );
+  }
   onCategorySelect(event: Event) {
     const selectedCategoryId = (event.target as HTMLSelectElement).value;
     console.log('Selected Category ID:', selectedCategoryId);

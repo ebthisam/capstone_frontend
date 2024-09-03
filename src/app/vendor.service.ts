@@ -24,7 +24,7 @@ export class VendorService {
   }
 
   listVendors(): Observable<Vendor[]> {
-    return this.http.get<Vendor[]>(`${this.apiUrl}/list`);
+    return this.http.get<Vendor[]>(`${this.apiUrl}`);
   }
   loginVendor(contactMail: string, password: string): Observable<Vendor> {
     return this.http.post<Vendor>(`${this.apiUrl}/login`, { contactMail, password });

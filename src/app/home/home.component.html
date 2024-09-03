@@ -21,13 +21,7 @@
           <span class="line line-3"></span>
         </button>
 
-        <div class="input-wrapper">
-          <input type="search" name="search" placeholder="Search product" class="search-field">
-
-          <button class="search-submit" aria-label="search">
-            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
-          </button>
-        </div>
+      
 
         <a [routerLink]="['/home']" class="navbar-link has-after">
           <img src="/assets/images/logo.png" width="179" height="26" alt="Glowing">
@@ -66,6 +60,15 @@
               <ul *ngIf="showCategoriesDropdown" class="dropdown-menu custom-dropdown">
                 <li *ngFor="let category of categories">
                   <a [routerLink]="['/products', category.id]" class="dropdown-item">{{ category.name }}</a>
+                </li>
+              </ul>
+            </li>
+            
+            <li class="dropdown" (mouseover)="toggleVendorsDropdown(true)" (mouseleave)="toggleVendorsDropdown(false)">
+              <a class="navbar-link has-after">Vendors</a>
+              <ul *ngIf="showVendorsDropdown" class="dropdown-menu custom-dropdown">
+                <li *ngFor="let vendor of vendors">
+                  <a [routerLink]="['/vendors', vendor.id]" class="dropdown-item">{{ vendor.name }}</a>
                 </li>
               </ul>
             </li>
