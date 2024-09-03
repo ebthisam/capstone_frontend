@@ -12,6 +12,7 @@ import { VendorComponent } from './vendor/vendor.component';
 import { LandingComponent } from './landing/landing.component';
 import { RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { OrderItemComponent } from './order-item/order-item.component';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     LoginComponent,
     ChangePasswordComponent,RouterModule,
 
-    ForgotPasswordComponent,CommonModule,HttpClientModule,HomeComponent,ProductListComponent,VendorComponent,LandingComponent],
+    ForgotPasswordComponent,CommonModule,HttpClientModule,HomeComponent,ProductListComponent,VendorComponent,LandingComponent,OrderItemComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

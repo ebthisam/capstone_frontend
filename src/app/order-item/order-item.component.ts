@@ -102,6 +102,7 @@ export class OrderItemComponent implements OnInit {
     this.orderService.createOrder(orderData).subscribe({
       next: () => {
         console.log('Order placed successfully');
+        alert("Order placed successfully");
         localStorage.removeItem('cart');
         this.router.navigate(['/home']);  // Adjust according to the desired destination
       },

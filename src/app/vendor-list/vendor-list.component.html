@@ -50,7 +50,7 @@
     <h3 class="sidebar-title">Vendors</h3>
     <ul class="sidebar-list">
       <li *ngFor="let vendor of vendors" class="sidebar-item">
-        <a [routerLink]="['/vendorproducts', vendor.id]" class="sidebar-link">{{ vendor.name }}</a>
+        <a [routerLink]="['/vendors', vendor.id]" class="sidebar-link">{{ vendor.name }}</a>
       </li>
     </ul>
   </aside>

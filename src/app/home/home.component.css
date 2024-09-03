@@ -24,8 +24,8 @@ img {
   width: 275px;
 
 
-}
 
+}
 input, button {
   background: none;
   border: none;
@@ -732,63 +732,12 @@ input, button {
     visibility: hidden;
     transition: var(--transition-1);
   }
-  
-  .back-top-btn:is(:hover, :focus) {
-    background-color: var(--hoockers-green);
-    color: var(--white);
-  }
-  
+
   .back-top-btn.active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(-10px);
-  }
-  .chatbot-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 350px;
-    height: 400px;
-    z-index: 1000; /* Ensure it's above other content */
-  }
-  
-  .chatbot-iframe {
-    width: 100%;
-    height: 100%;
-    border: none; /* Remove iframe border */
-  }
-  .chatbot-toggle {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    height: 50px;
     width: 50px;
-    background-color: white;
-    z-index: 1050;
-    cursor: pointer;
-    color: black;
-    padding: 10px;
-    border-radius: 50%;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  }
-  
-  .chatbot-container {
-    position: fixed;
-    bottom: 80px;
-    left: 20px;
-    width: 350px;
-    height: 400px;
-    z-index: 1040;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .ion-icon-chat {
-    display: block;
-    width: 25px;
-    height: 25px;
+
   }
   
   
@@ -807,7 +756,20 @@ input, button {
   
     /**
      * REUSED STYLE
-   
+     */
+  
+    .container {
+      max-width: 540px;
+      width: 100%;
+      margin-inline: auto;
+    }
+  
+    :is(.header, .hero) .container { max-width: unset; }
+  
+    .has-scrollbar { gap: 30px; }
+  
+    .scrollbar-item { min-width: calc(50% - 15px); }
+  
   
   
     /**
@@ -860,7 +822,18 @@ input, button {
 
   
     .header-top .container { padding-inline: 30px; }
-
+  
+  
+  
+    /**
+     * HERO
+     */
+  
+    .hero-card { padding-inline: 70px; }
+  
+    .hero-text { max-width: 30ch; }
+  
+  
   
     /**
      * BANNER
@@ -889,7 +862,7 @@ input, button {
    */
   
   @media (min-width: 768px) {
- 
+ s
   
   
     /**
@@ -900,7 +873,16 @@ input, button {
   
     .flex-item { max-width: calc(50% - 15px); }
   
-
+  
+  
+    /**
+     * COLLECTION
+     */
+  
+    .collection-card { min-height: 450px; }
+  
+  
+  
     /**
      * BANNER
      */
@@ -909,6 +891,13 @@ input, button {
   
     .banner-card { padding: 50px; }
   
+  
+  
+    /**
+     * OFFER
+     */
+  
+    .offer .section-text { max-width: 45ch; }
   
   
   
@@ -940,6 +929,12 @@ input, button {
   
   @media (min-width: 992px) {
   
+  
+   
+  
+    /**
+     * FOOTER
+     */
   
     .footer .logo { display: block; }
   
@@ -1026,6 +1021,10 @@ input, button {
   
     .header .search-submit ion-icon { --ionicon-stroke-width: 40px; }
   
+    .logo{
+      margin-left: 480px;
+
+    }
     .header .logo { margin-inline-end: 60px;
     size: 4px; }
   
@@ -1055,7 +1054,53 @@ input, button {
       align-items: center;
       gap: 10px;
     }
-  
+    .chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  height: 400px;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.chatbot-iframe {
+  width: 100%;
+  height: 100%;
+  border: none; /* Remove iframe border */
+}
+.chatbot-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  z-index: 1050;
+  cursor: pointer;
+  color: black;
+  padding: 10px;
+  border-radius: 50%;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  width: 350px;
+  height: 400px;
+  z-index: 1040;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.ion-icon-chat {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
 
   
    .header-action-btn .btn-text {
@@ -1124,6 +1169,14 @@ input, button {
     .hero-card { padding: 120px 100px; }
   
     .hero-text { max-width: 40ch; }
+  
+  
+  
+    /**
+     * BANNER
+     */
+  
+    .banner-card-1 .card-title { max-width: 15ch; }
   
   
   
