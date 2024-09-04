@@ -66,13 +66,11 @@ export class LoginComponent implements OnInit {
         next: (response: any) => {  // Type your response appropriately if known
           console.log('Vendor login successful:', response);
           this.loginFailed = false;
-          localStorage.setItem('token', response.token); // Store JWT token
+          localStorage.setItem('token', 'thisa'); // Store JWT token
           localStorage.setItem('role', 'Vendor');
           localStorage.setItem('vendorId', response.id); // Access vendor ID from the user object
           localStorage.setItem('vendorName', response.username); // Assuming username is used for the vendor name
           localStorage.setItem('vendorEmail', response.email); // Store email
-          localStorage.setItem('vendorPhone', response.phone); // Store phone
-          localStorage.setItem('vendorAddress', response.address); // Store address
           this.router.navigate(['/vendor']); // Navigate to vendor dashboard upon successful login
         },
         error: (error) => {

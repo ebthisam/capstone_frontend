@@ -44,33 +44,33 @@ export class SignupComponent {
   constructor(
     private userService: UserService,
     private vendorService: VendorService,
-    private router:Router
+    private router: Router
   ) {}
 
   onRoleChange() {
-    // Reset specific fields based on role change
+    // Reset fields based on the selected role
     if (this.role === 'Vendor') {
-      this.formData.email = '';
-      this.formData.phone = '';
+      this.formData.username = '';
+      this.formData.password = '';
     } else if (this.role === 'User') {
-      this.vendorData.contactMail = '';
-      this.vendorData.contactPhone = '';
+      this.vendorData.name = '';
+      this.vendorData.password = '';
     }
   }
 
   onSignup(form: NgForm) {
-    if (this.formData.password !== this.confirmPassword) {
+    if (this.role === 'User' && this.formData.password !== this.confirmPassword ||
+        this.role === 'Vendor' && this.vendorData.password !== this.confirmPassword) {
       this.passwordMismatch = true;
-      return; // Prevent form submission if passwords do not match
+      return;  // Prevent form submission if passwords do not match
     }
-  
+
     this.passwordMismatch = false;
-  
+
     if (form.valid) {
       if (this.role === 'Vendor') {
-        // Debugging log
+        // Register as Vendor
         console.log('Vendor Data being sent:', this.vendorData);
-  
         this.vendorService.registerVendor(this.vendorData).subscribe({
           next: (response) => {
             console.log('Vendor registered successfully:', response);
@@ -81,11 +81,12 @@ export class SignupComponent {
           }
         });
       } else if (this.role === 'User') {
+        // Register as User
+        console.log('User Data being sent:', this.formData);
         this.userService.registerUser(this.formData).subscribe({
           next: (response) => {
             console.log('User registered successfully:', response);
             this.router.navigate(['/login']);
-
           },
           error: (error) => {
             console.error('Error registering user:', error);

@@ -22,72 +22,70 @@
         </div>
       </div>
 
-      <!-- Common Fields -->
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Username"
-          name="username"
-          required
-          minlength="4"
-          pattern="^[a-zA-Z_]+$" 
-          [(ngModel)]="formData.username"
-          #username="ngModel"
-        />
-        <div *ngIf="username.invalid && username.touched" class="alert alert-danger">
-          <div *ngIf="username.errors?.['required']">Username is required!</div>
-          <div *ngIf="username.errors?.['minlength']">Username must be at least 4 characters long!</div>
-          <div *ngIf="username.errors?.['pattern']">Username can only contain letters and underscores!</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Password"
-          name="password"
-          required
-          minlength="8"
-          [(ngModel)]="formData.password"
-          #password="ngModel"
-        />
-        <div *ngIf="password.invalid && password.touched" class="alert alert-danger">
-          <div *ngIf="password.errors?.['required']">Password is required!</div>
-          <div *ngIf="password.errors?.['minlength']">Password must be at least 8 characters long!</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Confirm your password"
-          name="confirmPassword"
-          required
-          [(ngModel)]="confirmPassword"
-          #confirmPasswordInput="ngModel"
-        />
-        <div *ngIf="passwordMismatch" class="alert alert-danger">
-          Passwords do not match!
-        </div>
-      </div>
-
-      <!-- Email, Phone, and Address for User -->
+      <!-- Fields for User -->
       <div *ngIf="role === 'User'">
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Username"
+            name="username"
+            required
+            minlength="4"
+            pattern="^[a-zA-Z_]+$"
+            [(ngModel)]="formData.username"
+            #username="ngModel"
+          />
+          <div *ngIf="username.invalid && username.touched" class="alert alert-danger">
+            <div *ngIf="username.errors?.['required']">Username is required!</div>
+            <div *ngIf="username.errors?.['minlength']">Username must be at least 4 characters long!</div>
+            <div *ngIf="username.errors?.['pattern']">Username can only contain letters and underscores!</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="userPassword">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            name="userPassword"
+            required
+            minlength="8"
+            [(ngModel)]="formData.password"
+            #userPassword="ngModel"
+          />
+          <div *ngIf="userPassword.invalid && userPassword.touched" class="alert alert-danger">
+            <div *ngIf="userPassword.errors?.['required']">Password is required!</div>
+            <div *ngIf="userPassword.errors?.['minlength']">Password must be at least 8 characters long!</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Confirm your password"
+            name="confirmPassword"
+            required
+            [(ngModel)]="confirmPassword"
+            #confirmPasswordInput="ngModel"
+          />
+          <div *ngIf="passwordMismatch" class="alert alert-danger">
+            Passwords do not match!
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
           <input
             type="email"
             class="form-control"
             placeholder="Enter email"
             name="email"
             required
-            email
             [(ngModel)]="formData.email"
             #email="ngModel"
           />
@@ -98,7 +96,7 @@
         </div>
 
         <div class="form-group">
-          <label for="contactPhone">Phone</label>
+          <label for="phone">Phone</label>
           <input
             type="text"
             class="form-control"
@@ -130,7 +128,7 @@
         </div>
       </div>
 
-      <!-- Vendor Specific Fields -->
+      <!-- Fields for Vendor -->
       <div *ngIf="role === 'Vendor'">
         <div class="form-group">
           <label for="vendorName">Vendor Name</label>
@@ -149,6 +147,40 @@
         </div>
 
         <div class="form-group">
+          <label for="vendorPassword">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            name="vendorPassword"
+            required
+            minlength="8"
+            [(ngModel)]="vendorData.password"
+            #vendorPassword="ngModel"
+          />
+          <div *ngIf="vendorPassword.invalid && vendorPassword.touched" class="alert alert-danger">
+            <div *ngIf="vendorPassword.errors?.['required']">Password is required!</div>
+            <div *ngIf="vendorPassword.errors?.['minlength']">Password must be at least 8 characters long!</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmVendorPassword">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Confirm your password"
+            name="confirmVendorPassword"
+            required
+            [(ngModel)]="confirmPassword"
+            #confirmVendorPasswordInput="ngModel"
+          />
+          <div *ngIf="passwordMismatch" class="alert alert-danger">
+            Passwords do not match!
+          </div>
+        </div>
+
+        <div class="form-group">
           <label for="contactMail">Contact Email</label>
           <input
             type="email"
@@ -156,7 +188,6 @@
             placeholder="Enter contact email"
             name="contactMail"
             required
-            email
             [(ngModel)]="vendorData.contactMail"
             #contactMail="ngModel"
           />
@@ -229,7 +260,6 @@
           </div>
         </div>
 
-        <!-- GST Number Field -->
         <div class="form-group">
           <label for="gstno">GST Number</label>
           <input
@@ -249,7 +279,7 @@
 
       <!-- Submit Button -->
       <div class="btn-container">
-        <button type="submit"  class="buttonng">Signup</button>
+        <button type="submit" class="buttonng">Signup</button>
       </div>
     </form>
 
