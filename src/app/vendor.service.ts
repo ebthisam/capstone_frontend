@@ -16,7 +16,7 @@ export class VendorService {
     return this.http.post<Vendor>(`${this.apiUrl}/register`, vendor);
   }
   updateVendor(vendor: Vendor): Observable<Vendor> {
-    return this.http.put<Vendor>(`${this.apiUrl}/update/${vendor.id}`, vendor);
+    return this.http.put<Vendor>(`${this.apiUrl}/${vendor.id}`, vendor);
   }
 
   getVendorById(vendorId: string): Observable<Vendor> {
@@ -28,6 +28,10 @@ export class VendorService {
   }
   loginVendor(contactMail: string, password: string): Observable<Vendor> {
     return this.http.post<Vendor>(`${this.apiUrl}/login`, { contactMail, password });
+  }
+   // Get vendor by contact mail
+   getVendorByContactMail(contactMail: string): Observable<Vendor | null> {
+    return this.http.get<Vendor | null>(`${this.apiUrl}/contact/${contactMail}`);
   }
   signOut(): void {
     localStorage.removeItem('token');

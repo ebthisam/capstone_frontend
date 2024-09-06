@@ -12,6 +12,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { OrderItemComponent } from './order-item/order-item.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { VendorListComponent } from './vendor-list/vendor-list.component';
+import { VendorHomeComponent } from './vendor-home/vendor-home.component';
+import { VendorProfileComponent } from './vendor-profile/vendor-profile.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -20,7 +23,10 @@ export const routes: Routes = [
   { path: 'vendor', component: VendorComponent, canActivate: [AuthGuard], data: { expectedRole: 'Vendor' } },
   { path: 'products/:categoryId', component: ProductListComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
   { path: 'vendors/:vendorId', component: VendorListComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
+  { path:'vendor-home', component:VendorHomeComponent,canActivate:[AuthGuard],data:{expectedRole:'Vendor'}},
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
+  { path: 'vendor-profile', component: VendorProfileComponent, canActivate: [AuthGuard], data: { expectedRole: 'Vendor' } },
+
   { path: 'order-item', component: OrderItemComponent, canActivate: [AuthGuard], data: { expectedRole: 'User' } },
   { path: 'productsdetails/:id', component: ProductDetailsComponent ,canActivate: [AuthGuard], data: { expectedRole: 'User' } }, // Route for product details
 

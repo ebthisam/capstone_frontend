@@ -10,6 +10,9 @@ export class OrderItemService {
   private apiUrl = 'http://localhost:5004/api/order-items';  // Adjust this URL based on your backend configuration
 
   constructor(private http: HttpClient) {}
+  getOrderItemsByVendorId(vendorId: string): Observable<OrderItem[]> {
+    return this.http.get<OrderItem[]>(`${this.apiUrl}/vendor/${vendorId}`);
+  }
 
   // Create a new order item
   createOrderItem(orderItem: OrderItem): Observable<OrderItem> {

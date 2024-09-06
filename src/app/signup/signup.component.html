@@ -279,8 +279,14 @@
 
       <!-- Submit Button -->
       <div class="btn-container">
-        <button type="submit" class="buttonng">Signup</button>
+        <button type="submit" [disabled]="isCheckingEmail" class="buttonng">Signup</button>
       </div>
+      <div *ngIf="emailAlreadyRegistered" class="alert alert-danger">
+        <p>Email is already registered. Please use a different email or login.</p>
+      </div>
+      
+      <!-- Disable the button when checking for existing email -->
+      
     </form>
 
     <!-- Link to Sign In Page -->

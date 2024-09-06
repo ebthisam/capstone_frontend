@@ -1,16 +1,16 @@
+import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { VendorService } from '../vendor.service';
 import { User } from '../user';
 import { Vendor } from '../vendor';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  standalone:true,
+  imports:[CommonModule,FormsModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
@@ -19,8 +19,10 @@ export class SignupComponent {
   role: string = '';  // Track the selected role
   confirmPassword: string = '';
   passwordMismatch: boolean = false;
+  emailAlreadyRegistered: boolean = false;  // Handle email registration check
+  isCheckingEmail: boolean = false;  // Show loader/disable button while checking
 
-  // Common user data
+  // User data
   formData: User = {
     username: '',
     password: '',
@@ -37,8 +39,8 @@ export class SignupComponent {
     contactPhone: '',
     website: '',
     city: '',
-    password:'',
-    gstno:''
+    password: '',
+    gstno: ''
   };
 
   constructor(
@@ -48,13 +50,10 @@ export class SignupComponent {
   ) {}
 
   onRoleChange() {
-    // Reset fields based on the selected role
     if (this.role === 'Vendor') {
-      this.formData.username = '';
-      this.formData.password = '';
+      this.formData = { username: '', password: '', email: '', phone: '', address: '' };
     } else if (this.role === 'User') {
-      this.vendorData.name = '';
-      this.vendorData.password = '';
+      this.vendorData = { name: '', description: '', contactMail: '', contactPhone: '', website: '', city: '', password: '', gstno: '' };
     }
   }
 
@@ -66,33 +65,60 @@ export class SignupComponent {
     }
 
     this.passwordMismatch = false;
+    this.isCheckingEmail = true;  // Start checking email
 
-    if (form.valid) {
-      if (this.role === 'Vendor') {
-        // Register as Vendor
-        console.log('Vendor Data being sent:', this.vendorData);
-        this.vendorService.registerVendor(this.vendorData).subscribe({
-          next: (response) => {
-            console.log('Vendor registered successfully:', response);
-            this.router.navigate(['/login']);
-          },
-          error: (error) => {
-            console.error('Error registering vendor:', error);
+    if (this.role === 'User') {
+      // Check if user email is already registered
+      this.userService.getUserByEmail(this.formData.email).subscribe({
+        next: (existingUser) => {
+          if (existingUser) {
+            this.emailAlreadyRegistered = true;  // Show error if user exists
+            this.isCheckingEmail = false;  // Stop the loader
+          } else {
+            this.registerUser();  // Proceed with user registration
           }
-        });
-      } else if (this.role === 'User') {
-        // Register as User
-        console.log('User Data being sent:', this.formData);
-        this.userService.registerUser(this.formData).subscribe({
-          next: (response) => {
-            console.log('User registered successfully:', response);
-            this.router.navigate(['/login']);
-          },
-          error: (error) => {
-            console.error('Error registering user:', error);
+        },
+        error: () => this.registerUser()  // Handle error case (no user found)
+      });
+    } else if (this.role === 'Vendor') {
+      // Check if vendor email is already registered
+      this.vendorService.getVendorByContactMail(this.vendorData.contactMail).subscribe({
+        next: (existingVendor) => {
+          if (existingVendor) {
+            this.emailAlreadyRegistered = true;  // Show error if vendor exists
+            this.isCheckingEmail = false;  // Stop the loader
+          } else {
+            this.registerVendor();  // Proceed with vendor registration
           }
-        });
-      }
+        },
+        error: () => this.registerVendor()  // Handle error case (no vendor found)
+      });
     }
+  }
+
+  registerUser() {
+    this.userService.registerUser(this.formData).subscribe({
+      next: (response) => {
+        console.log('User registered successfully:', response);
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Error registering user:', error);
+        this.isCheckingEmail = false;
+      }
+    });
+  }
+
+  registerVendor() {
+    this.vendorService.registerVendor(this.vendorData).subscribe({
+      next: (response) => {
+        console.log('Vendor registered successfully:', response);
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Error registering vendor:', error);
+        this.isCheckingEmail = false;
+      }
+    });
   }
 }

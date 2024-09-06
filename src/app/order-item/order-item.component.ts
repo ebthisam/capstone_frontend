@@ -4,8 +4,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../order.service';
 import { ProductService } from '../product.service';
-
-
+import { OrderItem } from '../order-item';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-order-item',
@@ -16,7 +16,7 @@ import { ProductService } from '../product.service';
   styleUrls: ['./order-item.component.css']
 })
 export class OrderItemComponent implements OnInit {
-  orderItems: any[] = [];
+  orderItems: OrderItem[] = [];
   totalAmount: number = 0;
 
   constructor(
@@ -24,7 +24,7 @@ export class OrderItemComponent implements OnInit {
     private router: Router,
     private orderService: OrderService,
     private sanitizer: DomSanitizer,
-    private productService:ProductService
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -36,23 +36,23 @@ export class OrderItemComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-  // Load order items from local storage
+  // Load order items from local storage and populate additional product details
   loadOrderItems(): void {
     let loadedItems = JSON.parse(localStorage.getItem('cart') || '[]');
-    loadedItems.forEach((item: any) => {
+    loadedItems.forEach((item: OrderItem) => {
       this.productService.getProductById(item.productId).subscribe(product => {
         this.orderItems.push({
           ...item,
           productName: product.name,
           price: product.price,
-          productImage: product.imageUrl,
-          safeUrl: this.getSafeUrl(product.imageUrl)
+          // Don't store `productImage` in `OrderItem`, just use it directly in the component
+          productImage: product.imageUrl
         });
         this.calculateTotalAmount();
       });
     });
   }
-
+  
   // Calculate total amount for the order
   calculateTotalAmount(): void {
     this.totalAmount = this.orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -80,25 +80,17 @@ export class OrderItemComponent implements OnInit {
     this.calculateTotalAmount();
   }
 
-  // Handle adding a product to the cart
-  addToCart(product: any): void {
-    console.log('Product:', product); // Debugging: Check product details
-    if (!product || !product.id) {
-      console.error('Product is undefined or missing id.');
-      return;
-    }
-    // Add the product to the cart logic (to be implemented)
-  }
-
-  // Place the order and handle API call
+  // Place the order and send only required data
   placeOrder(): void {
     const orderData = {
       userId: localStorage.getItem('userId') || 'defaultUserId',
-      orderDate: new Date(),
-      totalAmount: this.totalAmount,
-      orderItems: this.orderItems
+      orderItems: this.orderItems.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.price // Include the price
+      }))
     };
-    
+  
     this.orderService.createOrder(orderData).subscribe({
       next: () => {
         console.log('Order placed successfully');
@@ -111,4 +103,5 @@ export class OrderItemComponent implements OnInit {
       }
     });
   }
+  
 }

@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('vendorId', response.id); // Access vendor ID from the user object
           localStorage.setItem('vendorName', response.username); // Assuming username is used for the vendor name
           localStorage.setItem('vendorEmail', response.email); // Store email
-          this.router.navigate(['/vendor']); // Navigate to vendor dashboard upon successful login
+          this.router.navigate(['/vendor-home']); // Navigate to vendor dashboard upon successful login
         },
         error: (error) => {
           console.error('Vendor login failed:', error);

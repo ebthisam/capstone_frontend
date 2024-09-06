@@ -35,6 +35,9 @@ export class UserService {
   updateUserProfile(email: string, userDetails: Partial<User>): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/${email}`, userDetails);
   }
+  getUserByEmail(email: string): Observable<User | null> {
+    return this.http.get<User | null>(`${this.apiUrl}/${email}`);
+  }
 
   // Get all orders by user ID
   getUserOrders(userId: string): Observable<any[]> {  // Replace 'any[]' with your order model if available

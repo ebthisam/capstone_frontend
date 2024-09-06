@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { CategoryService } from '../category.service';
 import { error } from 'console';
 import { Review } from '../review';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-vendor',
@@ -29,6 +30,8 @@ export class VendorComponent implements OnInit {
   activeUpdateForm: string | null = null; // Track the currently active update form
   selectedProductReviews: Review[] = []; // Store reviews for the selected product
   selectedProductName: string = ''; // Store the name of the selected product
+  selectedProductForUpdate: Product | null = null; // Track selected product for update
+  showUpdateModal: boolean = false; // Control modal visibility
 
 
 
@@ -36,7 +39,8 @@ export class VendorComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     private vendorService: VendorService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,    private route: ActivatedRoute,
+
   ) {
     const vendorId = localStorage.getItem('vendorId');
     this.productForm = this.fb.group({
@@ -61,8 +65,14 @@ export class VendorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCategories();
+    // Subscribe to query parameters to determine the action (create, update, delete, or reviews)
+    this.route.queryParams.subscribe(params => {
+      this.currentAction = params['action'] || '';
+    });
+
+    // Load products and categories as needed
     this.loadVendorProducts();
+    this.loadCategories();
   }
 
   loadCategories(): void {
@@ -108,13 +118,6 @@ export class VendorComponent implements OnInit {
     });
   }
 
-  toggleUpdateForm(productId: string): void {
-    if (this.activeUpdateForm === productId) {
-      this.activeUpdateForm = null; // Hide the form if it's already active
-    } else {
-      this.activeUpdateForm = productId; // Show the form for the selected product
-    }
-  }
 
   onSubmit() {
     if (this.productForm.valid) {
@@ -141,33 +144,7 @@ export class VendorComponent implements OnInit {
     this.productForm.patchValue({ categoryId: categoryId });
   }
 
-  onUpdateProduct(productId: string) {
-    if (this.updateForms[productId]?.valid) {
-      const vendorId = localStorage.getItem('vendorId'); // Fetch vendorId from localStorage
-      if (!vendorId) {
-        alert('Vendor ID is missing. Please log in again.');
-        return;
-      }
-  
-      const updatedProduct = {
-        ...this.updateForms[productId].value,
-        vendorId: vendorId // Ensure the vendorId is included in the payload
-      };
-  
-      this.productService.updateProduct(productId, updatedProduct).subscribe({
-        next: (response) => {
-          console.log('Product updated successfully:', response);
-          alert('Product updated successfully.');
-          this.loadVendorProducts(); // Refresh the product list after update
-          this.activeUpdateForm = null; // Hide the form after updating
-        },
-        error: (error) => {
-          console.error('Error updating product:', error);
-          alert('Failed to update product. Please try again.');
-        }
-      });
-    }
-  }
+
   
   deleteProductbyId(productId: string): void {
     const confirmation = confirm('Do you really want to delete this product?');
@@ -205,6 +182,51 @@ export class VendorComponent implements OnInit {
     }
   }
 
+ 
+  
+  toggleUpdateForm(product: Product): void {
+    this.selectedProductForUpdate = product;
+    this.showUpdateModal = true; // Open the modal for the selected product
+  }
+  
+  closeModal(): void {
+    this.showUpdateModal = false;
+    this.selectedProductForUpdate = null; // Reset the selected product
+  }
+  
+  onUpdateProduct(productId: string | undefined): void {
+    if (!productId) {
+      alert('Product ID is missing.');
+      return;
+    }
+  
+    if (this.updateForms[productId]?.valid) {
+      const vendorId = localStorage.getItem('vendorId');
+      if (!vendorId) {
+        alert('Vendor ID is missing. Please log in again.');
+        return;
+      }
+  
+      const updatedProduct = {
+        ...this.updateForms[productId].value,
+        vendorId: vendorId
+      };
+  
+      this.productService.updateProduct(productId, updatedProduct).subscribe({
+        next: (response) => {
+          console.log('Product updated successfully:', response);
+          alert('Product updated successfully.');
+          this.loadVendorProducts(); // Refresh the product list after update
+          this.closeModal(); // Close the modal
+        },
+        error: (error) => {
+          console.error('Error updating product:', error);
+          alert('Failed to update product. Please try again.');
+        }
+      });
+    }
+  }
+  
 
   createProduct() {
     this.currentAction = 'create';
